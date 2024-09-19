@@ -2,6 +2,8 @@
 {
   #imports = [ (modulesPath + "installer/scan/not-detected.nix") ];
 
+  hardware.enableRedistributableFirmware = true;
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
