@@ -47,7 +47,7 @@
     ];
   };
 
-  environments.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     corefonts
     libimobiledevice
     ifuse
