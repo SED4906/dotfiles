@@ -14,7 +14,7 @@
   fileSystems."/boot".device = "/dev/disk/by-uuid/17B0-4F1F";
   fileSystems."/boot".fsType = "vfat";
 
-  swapDevices.device = "/dev/disk/by-uuid/2d6ccaea-69a9-4a54-9e35-d5fd17032e7e";
+  swapDevices = [ {device = "/dev/disk/by-uuid/2d6ccaea-69a9-4a54-9e35-d5fd17032e7e";} ];
 
   networking.useDHCP = lib.mkDefault true;
 
