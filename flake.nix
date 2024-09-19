@@ -43,6 +43,7 @@
   {
     nixosConfigurations = {
       shuppet = nixosBox "x86_64-linux" "shuppet" [ nixos-hardware.nixosModules.microsoft-surface-go ];
+      nacli = nixosBox "x86_64-linux" "nacli" [ ];
     };
   };
 }
