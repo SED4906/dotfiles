@@ -14,8 +14,9 @@
   services.xserver.enable = true;
   services.xserver.desktopManager.xfce.enable = true;
   services.libinput.enable = true;
-  services.autoUpgrade.enable = true;
-  services.autoUpgrade.operation = "boot";
+
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.operation = "boot";
 
   security.rtkit.enable = true;
   services.pipewire = {
