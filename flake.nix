@@ -1,5 +1,5 @@
 {
-  description = "A SecureBoot-enabled NixOS configurations";
+  description = "SecureBoot-enabled NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -15,29 +15,21 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, ...}:
+  outputs = { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, ... }:
   let
     commonModules = [
       lix-module.nixosModules.default
       lanzaboote.nixosModules.lanzaboote
-      ({ pkgs, lib, ... }: {
-        boot.loader.systemd-boot.enable = lib.mkForce false;
-        boot.lanzaboote = {
-          enable = true;
-          pkiBundle = "/etc/secureboot";
-        };
-        environment.systemPackages = [ pkgs.sbctl ];
-      })
+      (./common)
     ];
-    nixosBox = arch: name: extras:
+    nixosBox = arch: name: extraModules:
     nixpkgs.lib.nixosSystem {
       system = arch;
       modules = (commonModules) ++ [
         (./. + "/machines/${name}")
-      ] ++ (extras);
+      ] ++ (extraModules);
     };
   in
   {

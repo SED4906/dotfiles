@@ -1,7 +1,13 @@
 { config, lib, pkgs, ... }:
+let
+  user-packages = with pkgs; [
+    thunderbird
+    libreoffice
+    discord
+  ];
+in
 {
   imports = [ ./hardware-configuration.nix ];
-  nixpkgs.config.allowUnfree = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
@@ -18,35 +24,19 @@
   system.autoUpgrade.enable = true;
   system.autoUpgrade.operation = "boot";
 
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  programs.firefox.enable = true;
-
   users.users.tba = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      thunderbird
-      libreoffice
-      discord
-    ];
+    packages = user-packages;
   };
 
   users.users.rba = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      thunderbird
-      libreoffice
-      discord
-    ];
+    packages = user-packages;
   };
+  
+  programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
     corefonts

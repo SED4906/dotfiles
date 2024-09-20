@@ -2,8 +2,8 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth.enable = true;
 
   networking.hostName = "litwick";
   networking.networkmanager.enable = true;
@@ -14,14 +14,6 @@
   services.xserver.desktopManager.deepin.enable = true;
   services.printing.enable = true;
   services.libinput.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   users.users.rba = {
     isNormalUser = true;
