@@ -31,14 +31,17 @@
     description = "SED";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
+      vscode
       thunderbird
       discord
       git
+      cargo
+      rustc
     ];
   };
 
   programs.firefox.enable = true;
+  programs.java.enable = true;
   environment.systemPackages = with pkgs; [
     maliit-keyboard
     tpm2-tss

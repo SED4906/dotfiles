@@ -15,9 +15,11 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-software-center.url = "github:snowfallorg/nix-software-center";
   };
 
-  outputs = { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, ... }:
+  outputs = inputs @ { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, nix-software-center, ... }:
   let
     commonModules = [
       lix-module.nixosModules.default
@@ -30,8 +32,9 @@
       modules = (commonModules) ++ [
         (./. + "/machines/${name}")
       ] ++ (extraModules);
+      specialArgs = { inherit inputs self; system = arch; };
     };
-  in
+  in rec
   {
     nixosConfigurations = {
       shuppet = nixosBox "x86_64-linux" "shuppet" [ nixos-hardware.nixosModules.microsoft-surface-go ];
