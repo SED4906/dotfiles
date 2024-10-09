@@ -15,11 +15,9 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nix-software-center.url = "github:snowfallorg/nix-software-center";
   };
 
-  outputs = inputs @ { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, nix-software-center, ... }:
+  outputs = { self, nixpkgs, lix-module, nixos-hardware, lanzaboote, ... }:
   let
     commonModules = [
       lix-module.nixosModules.default
@@ -31,29 +29,14 @@
       system = arch;
       modules = (commonModules) ++ [
         (./. + "/machines/${name}")
-        ({inputs, config, pkgs, lib, system, ...}: {
-          environment.systemPackages = [
-            inputs.nix-software-center.packages.${system}.nix-software-center
-          ];
-        })
       ] ++ (extraModules);
-      specialArgs = { inherit inputs self; system = arch; };
-    };
-    inariBox = arch: name: extraModules:
-    nixpkgs.lib.nixosSystem {
-      system = arch;
-      modules = (commonModules) ++ [
-        (./. + "/machines/${name}")
-        (./inari)
-      ] ++ (extraModules);
-      specialArgs = { inherit inputs self; system = arch; };
     };
   in rec
   {
     nixosConfigurations = {
       shuppet = nixosBox "x86_64-linux" "shuppet" [ nixos-hardware.nixosModules.microsoft-surface-go ];
       nacli = nixosBox "x86_64-linux" "nacli" [ ];
-      litwick = inariBox "x86_64-linux" "litwick" [ ];
+      litwick = nixosBox "x86_64-linux" "litwick" [ (./inari) ];
     };
   };
 }

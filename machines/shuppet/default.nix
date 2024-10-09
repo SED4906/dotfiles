@@ -24,6 +24,7 @@
     };
   };
   services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate ];
   services.printing.enable = true;
 
   users.users.rba = {
@@ -31,12 +32,15 @@
     description = "SED";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      vscode
+      vscode-fhs
       thunderbird
       discord
       git
       cargo
       rustc
+      libreoffice
+      tenacity
+      vlc
     ];
   };
 
