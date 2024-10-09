@@ -24,7 +24,7 @@
     };
   };
   services.desktopManager.plasma6.enable = true;
-  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa pkgs.kdePackages.kate ];
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.elisa ];
   services.printing.enable = true;
 
   users.users.rba = {
